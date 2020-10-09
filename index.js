@@ -12,44 +12,38 @@ app.use(bodyParser.urlencoded({extended: true}))
 // penggunaan cors agar end point dapat diakses oleh cross platform
 app.use(cors())
 
-    // end-point "/bola" dengan method POST
-app.post("/bola", (req,res) => {
-    // menampung data yang dikirimkan dan mengkonversi menjadi tipe numerik
-    let tinggi = Number(req.body.tinggi) // mengamil nilai tinggi dari body 
-    let jari_jari = Number(req.body.jari_jari) // mengamil nilai tinggi dari body 
 
-    let luas_permukaan = 2 * 3.14 * jari_jari *( jari_jari + tinggi )
-    let volume = 3.14 * jari_jari * jari_jari * tinggi
-
-    // membuat objek yang berisi data yang akan dijadikan response
-    let response = {
-        tinggi: tinggi,
-        jari_jari: jari_jari,
-        luas_permukaan: luas_permukaan,
-        volume: volume
+// end-point "/BMI" dengan method POST  
+app.post("/BMI", (req,res) => { 
+    let tinggi = Number(req.body.tinggi)
+    let berat = Number(req.body.berat)
+    
+ 
+    let bmi = berat / (tinggi * tinggi)
+    let status = bmi
+ 
+    if(bmi < 18.5){
+        status = "kurus";
+    }else if (bmi >= 18.5 && bmi <= 24.9){
+        status = "ideal";
+    }else if (bmi >= 25 && bmi <= 29.9){
+        status = "gemuk";
+    }else{
+        status = "obesitas"
     }
+ 
+    let response = {  
+        tinggi: tinggi,
+        berat: berat,
+        bmi: bmi,
+        status: status
+    } 
 
-    // memberikan response dengan format JSON yang berisi objek di atas
+
+
+// memberikan response dengan format JSON yang berisi objek di atas
     res.json(response)
 })
-
-
-// end-point "/balok" dengan method POST
-app.post("/bola", (req,res) => {
-    // menampung data yang dikirimkan dan mengkonversi menjadi tipe numerik
-    let tinggi = Number(req.body.tinggi) // mengamil nilai tinggi dari body 
-    let jari_jari = Number(req.body.jari_jari) // mengamil nilai tinggi dari body 
-
-    let luas_permukaan = 2 * 3.14 * jari_jari *( jari_jari + tinggi )
-    let volume = 3.14 * jari_jari * jari_jari * tinggi
-
-    // membuat objek yang berisi data yang akan dijadikan response
-    let response = {
-        tinggi: tinggi,
-        jari_jari: jari_jari,
-        luas_permukaan: luas_permukaan,
-        volume: volume
-    }
 
 
 
